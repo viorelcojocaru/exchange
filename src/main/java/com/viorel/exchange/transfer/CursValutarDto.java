@@ -9,5 +9,5 @@ public class CursValutarDto {
     private String codValuta;
     private int rata;
     private double curs;
-    private LocalDate data;
+    private String data;
 }

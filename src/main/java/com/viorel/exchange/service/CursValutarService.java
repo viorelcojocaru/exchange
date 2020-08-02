@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +19,7 @@ import java.util.Objects;
 public class CursValutarService {
     private final CursValutarRepository cursValutarRepository;
     private final DictionarValuteRepository dictionarValuteRepository;
-
+    private final String DATE_FORMAT= "dd/MM/yyyy";
     public CursValutarDto insertCursValutar(CursValutarDto dto) {
         CursValutar cursValutar = createCursValutar(dto);
         return cursValutarToDto(cursValutarRepository.save(cursValutar));
@@ -54,11 +55,12 @@ public class CursValutarService {
     }
 
     private CursValutarDto cursValutarToDto(CursValutar cursValutar) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
         CursValutarDto dto = new CursValutarDto();
         dto.setCodValuta(cursValutar.getCodValuta().getCodValuta());
         dto.setCurs(cursValutar.getCurs());
         dto.setRata(cursValutar.getRata());
-        dto.setData(cursValutar.getDataCurs());
+        dto.setData(cursValutar.getDataCurs().format(formatter));
         return dto;
     }
 

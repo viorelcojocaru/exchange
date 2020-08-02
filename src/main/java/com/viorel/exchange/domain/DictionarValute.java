@@ -2,16 +2,17 @@ package com.viorel.exchange.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "dictionar_valute")
-public class DictionarValute implements Serializable {
+@ToString(exclude = {"numerars", "cursValutars", "schimbValutars"})
+public class DictionarValute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -1,6 +1,7 @@
 package com.viorel.exchange.api;
 
 import com.viorel.exchange.service.SchimbValutarService;
+import com.viorel.exchange.transfer.Exchange2Dto;
 import com.viorel.exchange.transfer.ExchangeDto;
 import com.viorel.exchange.transfer.SchimbValutarDto;
 import lombok.RequiredArgsConstructor;
@@ -25,18 +26,14 @@ public class SchimbValutarRestController {
         }
         return ResponseEntity.ok(saved);
     }
-
-    @PutMapping("/all/curs-valutar/{codValuta}")
-    public ResponseEntity getAllByCodValuta(@PathVariable String codValuta) {
-//        List<CursValutarDto> cursValutars = cursValutarService.findByCodValuta(codValuta);
-//
-//        if(cursValutars != null) {
-//            log.info("Cursuri valutare  {}",cursValutars.size());
-//            return ResponseEntity.ok(cursValutars);
-//        } else {
-//            log.info("Curs Valuta : {} NOT FOUND", codValuta);
-            return ResponseEntity.notFound().build();
-//        }
+    @PostMapping("/exchange-two")
+    public ResponseEntity exchange2(@RequestBody Exchange2Dto dto) {
+        log.info("Request to Exchange2 Money {}", dto);
+        SchimbValutarDto saved = schimbValutarService.exchange(dto.getCodValuta(), dto.getSumaPrimita());
+        if (Objects.isNull(saved)){
+            return ResponseEntity.badRequest().body(dto);
+        }
+        return ResponseEntity.ok(saved);
     }
 
 }
